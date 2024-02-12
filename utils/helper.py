@@ -1,4 +1,5 @@
 import logging
+import cv2
 import torch
 import numpy as np
 from detectron2.engine import DefaultPredictor
@@ -47,3 +48,34 @@ class Predictor:
         self.visualizer.visualize(out_frame_seg, outputs)
 
         return (out_frame, out_frame_seg)
+
+    def predict_single_image(self, image_path):
+        frame = cv2.imread(image_path)
+        with torch.no_grad():
+            outputs = self.predictor(frame)["instances"]
+            
+        outputs = self.extractor(outputs)
+
+        out_frame, out_frame_seg = self.predict(frame)
+        # You can add additional logic here to display or save the results for a single image
+        print("Instances Tensor:")
+        for i, instance in enumerate(outputs):
+            print(f"Instance {i + 1}:")
+            print(instance)
+
+                # Redirect the printed output to a file
+        
+        
+        with open("outputs.txt", "w") as f:
+            print("Instances:")
+            for i, instance in enumerate(outputs):
+                print(f"Instance {i + 1}:")
+                print(instance)
+
+
+
+                # Additional information based on your model's output structure
+
+                print()  # Add a newline between instances
+        
+        return out_frame, out_frame_seg
