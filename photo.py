@@ -2,7 +2,8 @@ import cv2
 from utils.helper import GetLogger, Predictor
 from argparse import ArgumentParser
 import sys
-
+import matplotlib.pyplot as plt
+import numpy as np
 
 parser = ArgumentParser()
 parser.add_argument(
@@ -27,8 +28,9 @@ if __name__ == "__main__":
     # Now you can do something with the results, such as displaying or saving them
 
 
-    # Write the frame to the output video
+    # Write the frame to the output image
     #output_image_path = args.out
     #cv2.imwrite(output_image_path, out_frame)
     output_image_seg_path = args.out
     cv2.imwrite(output_image_seg_path, out_frame_seg)
+
